@@ -15,8 +15,6 @@ typedef struct Player {
     int score;
 } Player;
 
-
-
 void draw_scenario() {
     al_clear_to_color(al_map_rgb(233, 229, 189));
 }
@@ -84,9 +82,11 @@ int main() {
 
     Player player = { 3, 0 };
     Card cards[3];
-    initCard(&cards[0], 50, SCREEN_H / 2 - CARD_H / 2, 1);
-    initCard(&cards[1], 200, SCREEN_H / 2 - CARD_H / 2, 2);
-    initCard(&cards[2], 350, SCREEN_H / 2 - CARD_H / 2, 3);
+    initCard(&cards[0], 50, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
+    initCard(&cards[1], 200, SCREEN_H / 2 - CARD_H / 2, 2, al_load_bitmap("cards.jpg"));
+    initCard(&cards[2], 350, SCREEN_H / 2 - CARD_H / 2, 3, al_load_bitmap("cards.jpg"));
+
+    int fase = 0;
 
     img = al_load_bitmap("cachorro.jpg");
 
@@ -158,6 +158,14 @@ int main() {
                 }
                 else {
                     player.lives++;
+                    fase++;
+
+                    if (fase == 1) {
+                        initCard(&cards[3], 450, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
+                    }
+                    else if (fase == 2) {
+
+                    }
                 }
             }
         }

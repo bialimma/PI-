@@ -31,5 +31,8 @@
     <Image Include="..\cachorro.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="cards.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
 </Project>
