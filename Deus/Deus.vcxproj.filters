@@ -34,5 +34,8 @@
     <Image Include="cards.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="..\..\..\Downloads\game2d_background.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
 </Project>

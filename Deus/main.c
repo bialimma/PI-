@@ -5,14 +5,13 @@
 #include <allegro5/allegro_image.h>
 #include "card.h"
 
-const int SCREEN_W = 800;
-const int SCREEN_H = 600;
+const int SCREEN_W = 1280;
+const int SCREEN_H = 720;
 
 const float FPS = 60;
 
 typedef struct Player {
     int lives;
-    int score;
 } Player;
 
 void draw_scenario() {
@@ -20,9 +19,9 @@ void draw_scenario() {
 }
 
 void draw_player_info(Player player) {
-    al_draw_textf(al_create_builtin_font(), al_map_rgb(0, 0, 0),
+    al_draw_textf(al_create_builtin_font(), al_map_rgb(255, 255, 255),
         SCREEN_W / 2, 10, ALLEGRO_ALIGN_CENTER,
-        "Lives: %d | Score: %d", player.lives, player.score);
+        "Lives: %d", player.lives);
 }
 
 int main() {
@@ -80,15 +79,16 @@ int main() {
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
-    Player player = { 3, 0 };
+    Player player = { 3 }; // player = {lives} 
     Card cards[3];
-    initCard(&cards[0], 50, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
-    initCard(&cards[1], 200, SCREEN_H / 2 - CARD_H / 2, 2, al_load_bitmap("cards.jpg"));
-    initCard(&cards[2], 350, SCREEN_H / 2 - CARD_H / 2, 3, al_load_bitmap("cards.jpg"));
+    initCard(&cards[0], 250, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
+    initCard(&cards[1], 400, SCREEN_H / 2 - CARD_H / 2, 2, al_load_bitmap("cards.jpg"));
+    initCard(&cards[2], 550, SCREEN_H / 2 - CARD_H / 2, 3, al_load_bitmap("cards.jpg"));
+    initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 4, al_load_bitmap("cards.jpg"));
 
     int fase = 0;
 
-    img = al_load_bitmap("cachorro.jpg");
+    img = al_load_bitmap("game2d_background.jpg");
 
     int playing = 1;
     int checkPositions = 0; // Flag para ativar/desativar a verificação das posições das cartas
@@ -108,7 +108,7 @@ int main() {
 
             if (checkPositions) {
                 // Desenha as linhas de contorno das posições das cartas
-                al_draw_rectangle(CARD_1_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
+                /*al_draw_rectangle(CARD_1_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
                     CARD_1_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
                     al_map_rgb(255, 0, 0), 2);
                 al_draw_rectangle(CARD_2_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
@@ -116,10 +116,10 @@ int main() {
                     al_map_rgb(255, 0, 0), 2);
                 al_draw_rectangle(CARD_3_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
                     CARD_3_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
-                    al_map_rgb(255, 0, 0), 2);
+                    al_map_rgb(255, 0, 0), 2);*/
             }
 
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 4; ++i) {
                 draw_card(cards[i]);
             }
 
@@ -130,7 +130,7 @@ int main() {
         }
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (ev.mouse.button & 1) {
-                for (int i = 0; i < 3; ++i) {
+                for (int i = 0; i < 4; ++i) {
                     if (ev.mouse.x >= cards[i].x && ev.mouse.x <= cards[i].x + CARD_W &&
                         ev.mouse.y >= cards[i].y && ev.mouse.y <= cards[i].y + CARD_H) {
                         // Inicia o arrasto da carta
@@ -141,7 +141,7 @@ int main() {
         }
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
             if (ev.mouse.button & 1) {
-                for (int i = 0; i < 3; ++i) {
+                for (int i = 0; i < 4; ++i) {
                     // Encerra o arrasto da carta
                     cards[i].grabbed = 0;
                 }
@@ -161,7 +161,7 @@ int main() {
                     fase++;
 
                     if (fase == 1) {
-                        initCard(&cards[3], 450, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
+                        initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cachorro.jpg"));
                     }
                     else if (fase == 2) {
 
@@ -170,7 +170,7 @@ int main() {
             }
         }
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 4; ++i) {
                 // Atualiza a posição da carta enquanto estiver sendo arrastada
                 if (cards[i].grabbed) {
                     cards[i].x = ev.mouse.x - CARD_W / 2;

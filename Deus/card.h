@@ -13,6 +13,8 @@ const int CARD_H = 150;
 #define CARD_3_AREA_X_START (CARD_2_AREA_X_END + 50)
 #define CARD_3_AREA_X_END (CARD_3_AREA_X_START + CARD_W)
 
+
+
 typedef struct Card {
     float x, y;
     int value;
@@ -26,7 +28,7 @@ void initCard(Card* card, float x, float y, int value, ALLEGRO_BITMAP* imagem) {
     card->value = value;
     card->grabbed = 0;
     card->imagem = imagem;
- }
+}
 
 void draw_card(Card card) { //carta 
     al_draw_filled_rectangle(card.x, card.y,
@@ -39,7 +41,8 @@ void draw_card(Card card) { //carta
 }
 
 bool is_ordered(Card cards[]) {
-    if (cards[0].x < cards[1].x && cards[1].x < cards[2].x) {
+    if (cards[0].x < cards[1].x && cards[1].x < cards[2].x && cards[2].x < cards[3].x)//add mais cartas 
+    {
         return true;
     }
     else {

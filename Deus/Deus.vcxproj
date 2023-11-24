@@ -150,6 +150,7 @@
     <ClInclude Include="card.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\Downloads\game2d_background.jpg" />
     <Image Include="..\cachorro.jpg" />
     <Image Include="cards.jpg" />
   </ItemGroup>
