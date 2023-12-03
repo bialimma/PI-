@@ -28,13 +28,28 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\cachorro.jpg">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
-    <Image Include="cards.jpg">
-      <Filter>Arquivos de Recurso</Filter>
-    </Image>
     <Image Include="..\..\..\Downloads\game2d_background.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\agua_viva.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\dinossauro.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\pitagoras.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\socrates.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\piramides.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Pictures\cleopatra.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="start.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

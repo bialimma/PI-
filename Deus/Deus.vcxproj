@@ -151,8 +151,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Downloads\game2d_background.jpg" />
-    <Image Include="..\cachorro.jpg" />
-    <Image Include="cards.jpg" />
+    <Image Include="..\..\..\Pictures\agua_viva.jpg" />
+    <Image Include="..\..\..\Pictures\cleopatra.jpg" />
+    <Image Include="..\..\..\Pictures\dinossauro.jpg" />
+    <Image Include="..\..\..\Pictures\piramides.jpg" />
+    <Image Include="..\..\..\Pictures\pitagoras.jpg" />
+    <Image Include="..\..\..\Pictures\socrates.jpg" />
+    <Image Include="start.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

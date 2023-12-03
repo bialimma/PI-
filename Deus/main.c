@@ -44,15 +44,40 @@ void add_card(Card cards[], int index, ALLEGRO_BITMAP* card_bitmap)
     cards[index] = card;
 }
 
+
 void start_screen()
 {
+    // Limpar a tela para a cor preta
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
+    // Carregar uma imagem
+    ALLEGRO_BITMAP* imagem = al_load_bitmap("start.jpg");
+
+    // Verificar se a imagem foi carregada corretamente
+    if (!imagem) {
+        fprintf(stderr, "Falha ao carregar a imagem!\n");
+        // Trate o erro adequadamente
+    }
+    else {
+        // Desenhar a imagem no centro da tela
+        int largura_imagem = al_get_bitmap_width(imagem);
+        int altura_imagem = al_get_bitmap_height(imagem);
+        al_draw_bitmap(imagem, (SCREEN_W - largura_imagem) / 2, (SCREEN_H - altura_imagem) / 2, 0);
+
+        // Destruir a imagem após usá-la
+        al_destroy_bitmap(imagem);
+    }
+
+    // Criar uma fonte embutida
     ALLEGRO_FONT* font = al_create_builtin_font();
-    al_draw_text(font, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2 - 30,
+
+    // Desenhar textos na tela
+    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 - 30,
         ALLEGRO_ALIGN_CENTER, "Pressione ENTER para iniciar o jogo");
-    al_draw_text(font, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2 + 30,
+    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 + 30,
         ALLEGRO_ALIGN_CENTER, "Use o mouse para arrastar as cartas e ordená-las");
+
+    // Trocar o buffer para exibir na tela
     al_flip_display();
 }
 
@@ -122,14 +147,14 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
     srand(time(NULL));
-    card_bitmap[0] = al_load_bitmap("cards.jpg");
-    card_bitmap[1] = al_load_bitmap("cards.jpg");
-    card_bitmap[2] = al_load_bitmap("cards.jpg");
-    card_bitmap[3] = al_load_bitmap("cards.jpg");
-    card_bitmap[4] = al_load_bitmap("cards.jpg");
-    card_bitmap[5] = al_load_bitmap("cards.jpg");
-    card_bitmap[6] = al_load_bitmap("cards.jpg");
-    card_bitmap[7] = al_load_bitmap("cards.jpg");
+    card_bitmap[0] = al_load_bitmap("cleopatra.jpg");
+    card_bitmap[1] = al_load_bitmap("dinossauro.jpg");
+    card_bitmap[2] = al_load_bitmap("piramides.jpg");
+    card_bitmap[3] = al_load_bitmap("pitagoras.jpg");
+    card_bitmap[4] = al_load_bitmap("socrates.jpg");
+    card_bitmap[5] = al_load_bitmap("agua_viva.jpg");
+    card_bitmap[6] = al_load_bitmap("agua_viva.jpg");
+    card_bitmap[7] = al_load_bitmap("agua_viva.jpg");
     card_bitmap[8] = al_load_bitmap("cards.jpg");
     card_bitmap[9] = al_load_bitmap("cards.jpg");
 
@@ -156,6 +181,7 @@ int main()
 
     // Mostra a tela de início
     start_screen();
+
 
     // Aguarda até que o jogador pressione ENTER para começar o jogo
     bool game_started = false;
