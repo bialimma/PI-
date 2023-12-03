@@ -28,11 +28,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="shadow.h">
-      <Filter>Arquivos de Origem</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\cachorro.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>

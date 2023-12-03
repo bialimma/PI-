@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
@@ -28,13 +29,13 @@ void draw_scenario()
 void draw_player_info(Player player)
 {
     al_draw_textf(al_create_builtin_font(), al_map_rgb(255, 255, 255),
-                  SCREEN_W / 2, 10, ALLEGRO_ALIGN_CENTER,
-                  "Lives: %d", player.lives);
+        SCREEN_W / 2, 10, ALLEGRO_ALIGN_CENTER,
+        "Lives: %d", player.lives);
 }
 
 Card possible_cards[10];
 
-void add_card(Card cards[], int index, ALLEGRO_BITMAP *card_bitmap)
+void add_card(Card cards[], int index, ALLEGRO_BITMAP* card_bitmap)
 {
     Card previousCard = cards[index - 1];
     Card card;
@@ -43,13 +44,25 @@ void add_card(Card cards[], int index, ALLEGRO_BITMAP *card_bitmap)
     cards[index] = card;
 }
 
+void start_screen()
+{
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+
+    ALLEGRO_FONT* font = al_create_builtin_font();
+    al_draw_text(font, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2 - 30,
+        ALLEGRO_ALIGN_CENTER, "Pressione ENTER para iniciar o jogo");
+    al_draw_text(font, al_map_rgb(255, 255, 255), SCREEN_W / 2, SCREEN_H / 2 + 30,
+        ALLEGRO_ALIGN_CENTER, "Use o mouse para arrastar as cartas e ordená-las");
+    al_flip_display();
+}
+
 int main()
 {
-    ALLEGRO_DISPLAY *display = NULL;
-    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-    ALLEGRO_TIMER *timer = NULL;
-    ALLEGRO_BITMAP *img;
-    ALLEGRO_BITMAP *card_bitmap[10];
+    ALLEGRO_DISPLAY* display = NULL;
+    ALLEGRO_EVENT_QUEUE* event_queue = NULL;
+    ALLEGRO_TIMER* timer = NULL;
+    ALLEGRO_BITMAP* img;
+    ALLEGRO_BITMAP* card_bitmap[10];
 
     if (!al_init())
     {
@@ -120,7 +133,7 @@ int main()
     card_bitmap[8] = al_load_bitmap("cards.jpg");
     card_bitmap[9] = al_load_bitmap("cards.jpg");
 
-    Player player = {.lives = 3, .card_quantity = 2}; // player = {lives}
+    Player player = { .lives = 3, .card_quantity = 2 }; // player = {lives}
     Card cards[9];
     Shadow shadows[9];
     initCard(&cards[0], 250, SCREEN_H - 174, 0, card_bitmap[0]);
@@ -140,6 +153,27 @@ int main()
     int positionsChecked = 0; // Flag para indicar se as posições das cartas foram verificadas
 
     al_start_timer(timer);
+
+    // Mostra a tela de início
+    start_screen();
+
+    // Aguarda até que o jogador pressione ENTER para começar o jogo
+    bool game_started = false;
+    while (!game_started)
+    {
+        ALLEGRO_EVENT ev;
+        al_wait_for_event(event_queue, &ev);
+
+        if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_ENTER)
+        {
+            game_started = true;
+        }
+        else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        {
+            playing = 0;
+            game_started = true; // Sair do loop se a janela for fechada
+        }
+    }
 
     while (playing)
     {
@@ -228,7 +262,7 @@ int main()
                 }
                 else
                 {
-                    player.lives++;
+                   // player.lives++;
                 }
                 if (player.card_quantity < 10)
                 {
@@ -252,10 +286,13 @@ int main()
             break;
         }
     }
+  
 
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
     al_destroy_bitmap(img);
+    al_destroy_timer(timer);
+    
 
     for (int i = 0; i < 10; i++)
     {
