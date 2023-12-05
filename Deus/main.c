@@ -131,16 +131,16 @@ int main()
 
     Card cards[10];
 
-    card_bitmap[0] = al_load_bitmap("../Deus/agua_viva.jpg");
-    card_bitmap[1] = al_load_bitmap("../Deus/dinossauro.jpg");
-    card_bitmap[2] = al_load_bitmap("../Deus/vidro.jpg");
-    card_bitmap[3] = al_load_bitmap("../Deus/piramides.jpg");
-    card_bitmap[4] = al_load_bitmap("../Deus/mamutes.jpg");
-    card_bitmap[5] = al_load_bitmap("../Deus/pitagoras.jpg");
-    card_bitmap[6] = al_load_bitmap("../Deus/socrates.jpg");
-    card_bitmap[7] = al_load_bitmap("../Deus/muralha_china.jpg");
-    card_bitmap[8] = al_load_bitmap("../Deus/cleopatra.jpg");
-    card_bitmap[9] = al_load_bitmap("../Deus/imp_romano.jpg");
+    card_bitmap[0] = al_load_bitmap("agua_viva.jpg");
+    card_bitmap[1] = al_load_bitmap("dinossauro.jpg");
+    card_bitmap[2] = al_load_bitmap("vidro.jpg");
+    card_bitmap[3] = al_load_bitmap("piramides.jpg");
+    card_bitmap[4] = al_load_bitmap("mamutes.jpg");
+    card_bitmap[5] = al_load_bitmap("pitagoras.jpg");
+    card_bitmap[6] = al_load_bitmap("socrates.jpg");
+    card_bitmap[7] = al_load_bitmap("muralha_china.jpg");
+    card_bitmap[8] = al_load_bitmap("cleopatra.jpg");
+    card_bitmap[9] = al_load_bitmap("imp_romano.jpg");
     Shadow shadows[10];
 
     for (int i = 0; i < 10; i++)
@@ -169,7 +169,7 @@ int main()
     }
 
     int fase = 0;
-    img = al_load_bitmap("../Deus/background_test.jpg");
+    img = al_load_bitmap("Project.jpg");
 
     int playing = 1;
     int checkPositions = 0;

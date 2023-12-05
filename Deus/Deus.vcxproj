@@ -152,6 +152,7 @@
   <ItemGroup>
     <Image Include="..\..\..\Downloads\background_yas.jpg" />
     <Image Include="..\..\..\Downloads\game2d_background.jpg" />
+    <Image Include="..\..\..\Downloads\Project.jpg" />
     <Image Include="..\..\..\Pictures\agua_viva.jpg" />
     <Image Include="..\..\..\Pictures\cleopatra.jpg" />
     <Image Include="..\..\..\Pictures\dinossauro.jpg" />
@@ -164,9 +165,6 @@
     <Image Include="mamutes.jpg" />
     <Image Include="muralha_china.jpg" />
     <Image Include="vidro.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Vintage Waves.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

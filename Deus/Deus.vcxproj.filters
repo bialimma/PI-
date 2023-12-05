@@ -70,10 +70,8 @@
     <Image Include="imp_romano.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Vintage Waves.ttf">
+    <Image Include="..\..\..\Downloads\Project.jpg">
       <Filter>Arquivos de Recurso</Filter>
-    </Font>
+    </Image>
   </ItemGroup>
 </Project>
