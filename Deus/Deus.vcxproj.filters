@@ -49,8 +49,31 @@
     <Image Include="..\..\..\Pictures\cleopatra.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
-    <Image Include="start.jpg">
+    <Image Include="background_test.jpg">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="background_start.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="..\..\..\Downloads\background_yas.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="muralha_china.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="vidro.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="mamutes.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="imp_romano.jpg">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Vintage Waves.ttf">
+      <Filter>Arquivos de Recurso</Filter>
+    </Font>
   </ItemGroup>
 </Project>

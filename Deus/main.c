@@ -8,8 +8,8 @@
 #include "card.h"
 #include "shadow.h"
 
-const int SCREEN_W = 1280;
-const int SCREEN_H = 720;
+const int SCREEN_W = 1300;
+const int SCREEN_H = 740;
 
 const float FPS = 60;
 
@@ -39,45 +39,32 @@ void add_card(Card cards[], int index, ALLEGRO_BITMAP* card_bitmap)
 {
     Card previousCard = cards[index - 1];
     Card card;
-
     initCard(&card, previousCard.x + 50, SCREEN_H - 174, previousCard.value + 1, card_bitmap);
     cards[index] = card;
 }
 
-
 void start_screen()
 {
-    // Limpar a tela para a cor preta
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    // Carregar uma imagem
-    ALLEGRO_BITMAP* imagem = al_load_bitmap("start.jpg");
+    ALLEGRO_BITMAP* imagem = al_load_bitmap("background_start.jpg");
 
-    // Verificar se a imagem foi carregada corretamente
     if (!imagem) {
         fprintf(stderr, "Falha ao carregar a imagem!\n");
-        // Trate o erro adequadamente
     }
     else {
-        // Desenhar a imagem no centro da tela
         int largura_imagem = al_get_bitmap_width(imagem);
         int altura_imagem = al_get_bitmap_height(imagem);
         al_draw_bitmap(imagem, (SCREEN_W - largura_imagem) / 2, (SCREEN_H - altura_imagem) / 2, 0);
-
-        // Destruir a imagem após usá-la
         al_destroy_bitmap(imagem);
     }
 
-    // Criar uma fonte embutida
     ALLEGRO_FONT* font = al_create_builtin_font();
-
-    // Desenhar textos na tela
     al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 - 30,
         ALLEGRO_ALIGN_CENTER, "Pressione ENTER para iniciar o jogo");
     al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 + 30,
         ALLEGRO_ALIGN_CENTER, "Use o mouse para arrastar as cartas e ordená-las");
 
-    // Trocar o buffer para exibir na tela
     al_flip_display();
 }
 
@@ -147,43 +134,53 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
     srand(time(NULL));
-    card_bitmap[0] = al_load_bitmap("cleopatra.jpg");
-    card_bitmap[1] = al_load_bitmap("dinossauro.jpg");
-    card_bitmap[2] = al_load_bitmap("piramides.jpg");
-    card_bitmap[3] = al_load_bitmap("pitagoras.jpg");
-    card_bitmap[4] = al_load_bitmap("socrates.jpg");
-    card_bitmap[5] = al_load_bitmap("agua_viva.jpg");
-    card_bitmap[6] = al_load_bitmap("agua_viva.jpg");
-    card_bitmap[7] = al_load_bitmap("agua_viva.jpg");
-    card_bitmap[8] = al_load_bitmap("cards.jpg");
-    card_bitmap[9] = al_load_bitmap("cards.jpg");
 
-    Player player = { .lives = 3, .card_quantity = 2 }; // player = {lives}
-    Card cards[9];
-    Shadow shadows[9];
-    initCard(&cards[0], 250, SCREEN_H - 174, 0, card_bitmap[0]);
-    initCard(&cards[1], 300, SCREEN_H - 174, 1, card_bitmap[1]);
+    card_bitmap[0] = al_load_bitmap("agua_viva.jpg");
+    card_bitmap[1] = al_load_bitmap("dinossauro.jpg");
+    card_bitmap[2] = al_load_bitmap("vidro.jpg");
+    card_bitmap[3] = al_load_bitmap("piramides.jpg");
+    card_bitmap[4] = al_load_bitmap("mamutes.jpg");
+    card_bitmap[5] = al_load_bitmap("pitagoras.jpg");
+    card_bitmap[6] = al_load_bitmap("socrates.jpg");
+    card_bitmap[7] = al_load_bitmap("muralha_china.jpg");
+    card_bitmap[8] = al_load_bitmap("cleopatra.jpg");
+    card_bitmap[9] = al_load_bitmap("imp_romano.jpg");
+
+    bool card_used[10] = { false };
+
+    for (int i = 0; i < 10; i++) {
+        int random_index;
+        do {
+            random_index = rand() % 10;
+        } while (card_used[random_index]);
+
+        card_used[random_index] = true;
+
+        ALLEGRO_BITMAP* temp = card_bitmap[i];
+        card_bitmap[i] = card_bitmap[random_index];
+        card_bitmap[random_index] = temp;
+    }
+
+    Player player = { .lives = 3, .card_quantity = 2 };
+    Card cards[10];
+    Shadow shadows[10];
 
     for (int i = 0; i < 10; ++i)
     {
-        initShadow(&shadows[i], 250 + (i * 125), 200);
+        initCard(&cards[i], 250 + i * 100, SCREEN_H - 174, i, card_bitmap[i]);
+        initShadow(&shadows[i], 30 + (i * 125), 200);
     }
 
     int fase = 0;
-
-    img = al_load_bitmap("game2d_background.jpg");
+    img = al_load_bitmap("background_test.jpg");
 
     int playing = 1;
-    int checkPositions = 0;   // Flag para ativar/desativar a verificação das posições das cartas
-    int positionsChecked = 0; // Flag para indicar se as posições das cartas foram verificadas
+    int checkPositions = 0;
+    int positionsChecked = 0;
 
     al_start_timer(timer);
-
-    // Mostra a tela de início
     start_screen();
 
-
-    // Aguarda até que o jogador pressione ENTER para começar o jogo
     bool game_started = false;
     while (!game_started)
     {
@@ -197,7 +194,7 @@ int main()
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
             playing = 0;
-            game_started = true; // Sair do loop se a janela for fechada
+            game_started = true;
         }
     }
 
@@ -219,16 +216,10 @@ int main()
 
             if (checkPositions)
             {
-                // Desenha as linhas de contorno das posições das cartas
-                /*al_draw_rectangle(CARD_1_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
-                    CARD_1_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
-                    al_map_rgb(255, 0, 0), 2);
-                al_draw_rectangle(CARD_2_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
-                    CARD_2_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
-                    al_map_rgb(255, 0, 0), 2);
-                al_draw_rectangle(CARD_3_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
-                    CARD_3_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
-                    al_map_rgb(255, 0, 0), 2);*/
+                // Desenhe retângulos de contorno nas posições desejadas
+                // Exemplo: al_draw_rectangle(CARD_1_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
+                //                             CARD_1_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
+                //                             al_map_rgb(255, 0, 0), 2);
             }
 
             for (int i = 0; i < player.card_quantity; ++i)
@@ -256,7 +247,6 @@ int main()
                     if (ev.mouse.x >= cards[i].x && ev.mouse.x <= cards[i].x + CARD_W &&
                         ev.mouse.y >= cards[i].y && ev.mouse.y <= cards[i].y + CARD_H)
                     {
-                        // Inicia o arrasto da carta
                         player.card_grabbed_index = i;
                         player.is_card_being_dragged = true;
                     }
@@ -281,14 +271,13 @@ int main()
                 positionsChecked = 1;
                 checkPositions = 0;
 
-                // Verifica se as cartas estão nas posições corretas
                 if (!is_ordered(cards, player.card_quantity))
                 {
-                    player.lives--; // Reduz a vida se as cartas não estiverem nas posições corretas
+                    player.lives--;
                 }
                 else
                 {
-                   // player.lives++;
+                    // player.lives++; // Aumentar vidas se a ordem estiver correta
                 }
                 if (player.card_quantity < 10)
                 {
@@ -299,7 +288,6 @@ int main()
         }
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
         {
-            // Atualiza a posição da carta enquanto estiver sendo arrastada
             if (player.is_card_being_dragged)
             {
                 cards[player.card_grabbed_index].x = ev.mouse.x - CARD_W / 2;
@@ -312,13 +300,14 @@ int main()
             break;
         }
     }
-  
 
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
     al_destroy_bitmap(img);
     al_destroy_timer(timer);
-    
+
+    ALLEGRO_FONT* font = al_create_builtin_font();
+    al_destroy_font(font);
 
     for (int i = 0; i < 10; i++)
     {

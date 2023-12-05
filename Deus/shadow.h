@@ -4,8 +4,8 @@
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 
-const int SHADOW_W = 100;
-const int SHADOW_H = 150;
+const int SHADOW_W = 120;
+const int SHADOW_H = 170;
 
 typedef struct Shadow
 {

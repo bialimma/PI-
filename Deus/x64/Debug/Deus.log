@@ -1,3 +1,4 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: O diretório intermediário (x64\Debug\) contém arquivos compartilhados de outro projeto (Deus.vcxproj). Isso pode levar a um comportamento incorreto de limpeza e recompilação.
   main.c
+C:\Users\Júlia\Desktop\PI-\Deus\card.h(62): warning C4715: 'is_ordered': nem todos os caminhos de controle retornam um valor
   Deus.vcxproj -> C:\Users\Júlia\Desktop\PI-\x64\Debug\Projeto Integrador - Cronologia.exe

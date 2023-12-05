@@ -4,8 +4,8 @@
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 
-const int CARD_W = 100;
-const int CARD_H = 150;
+const int CARD_W = 120;
+const int CARD_H = 170;
 
 #define CARD_1_AREA_X_START 50
 #define CARD_1_AREA_X_END (CARD_1_AREA_X_START + CARD_W)
@@ -38,9 +38,9 @@ void draw_card(Card card)
                              card.x + CARD_W, card.y + CARD_H,
                              al_map_rgb(255, 255, 255));
     al_draw_bitmap(card.imagem, card.x, card.y, 0);
-    al_draw_textf(al_create_builtin_font(), al_map_rgb(0, 0, 0),
+    /*al_draw_textf(al_create_builtin_font(), al_map_rgb(0, 0, 0),
                   card.x + CARD_W / 2, card.y + CARD_H / 2 - 10, ALLEGRO_ALIGN_CENTER,
-                  "%d", card.value);
+                  "%d", card.value);*/
 }
 
 bool is_ordered(Card cards[], int card_quantity)
@@ -53,8 +53,10 @@ bool is_ordered(Card cards[], int card_quantity)
             {
                 return false;
             }
+            else 
+                return true;
         }
     }
 
-    return true;
+    //return true;
 }
