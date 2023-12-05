@@ -82,14 +82,14 @@ int main() {
 
     Player player = { 3 }; // player = {lives} 
     Card cards[2];
-    initCard(&cards[0], 250, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cards.jpg"));
-    initCard(&cards[1], 400, SCREEN_H / 2 - CARD_H / 2, 2, al_load_bitmap("cards.jpg"));
-    initCard(&cards[2], 550, SCREEN_H / 2 - CARD_H / 2, 3, al_load_bitmap("cards.jpg"));
-    //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 4, al_load_bitmap("cards.jpg"));
+    initCard(&cards[0], 250, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("../Deus/cards.jpg"));
+    initCard(&cards[1], 400, SCREEN_H / 2 - CARD_H / 2, 2, al_load_bitmap("../Deus/cards.jpg"));
+    initCard(&cards[2], 550, SCREEN_H / 2 - CARD_H / 2, 3, al_load_bitmap("../Deus/cards.jpg"));
+    //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 4, al_load_bitmap("../Deus/cards.jpg"));
 
     int fase = 0;
 
-    img = al_load_bitmap("game2d_background.jpg");
+    img = al_load_bitmap("../Deus/game2d_background.jpg");
 
     int playing = 1;
     int checkPositions = 0; // Flag para ativar/desativar a verificação das posições das cartas
@@ -162,14 +162,14 @@ int main() {
                         /*!is_ordered(cards);
                     }*/
                         
-                    //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cachorro.jpg"));       
+                    //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("../Deus/cachorro.jpg"));       
                 }
                 else {
                     player.lives++;
                     fase++;
 
                     if (fase == 1) {
-                       //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("cachorro.jpg"));
+                       //initCard(&cards[3], 700, SCREEN_H / 2 - CARD_H / 2, 1, al_load_bitmap("../Deus/cachorro.jpg"));
                     }
                     else if (fase == 2) {
 

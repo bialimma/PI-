@@ -16,27 +16,19 @@ const int CARD_H = 170;
 
 typedef struct Card
 {
-    float x, y;
+    int x, y;
     int value;
     int grabbed; // Indica se a carta est� sendo arrastada
     bool selected;
     ALLEGRO_BITMAP *imagem;
 } Card;
 
-void initCard(Card *card, float x, float y, int value, ALLEGRO_BITMAP *imagem)
-{
-    card->x = x;
-    card->y = y;
-    card->value = value;
-    card->imagem = imagem;
-    card->selected = false;
-}
-
 void draw_card(Card card)
 {
     al_draw_filled_rectangle(card.x, card.y,
                              card.x + CARD_W, card.y + CARD_H,
                              al_map_rgb(255, 255, 255));
+
     al_draw_bitmap(card.imagem, card.x, card.y, 0);
     /*al_draw_textf(al_create_builtin_font(), al_map_rgb(0, 0, 0),
                   card.x + CARD_W / 2, card.y + CARD_H / 2 - 10, ALLEGRO_ALIGN_CENTER,
@@ -47,16 +39,14 @@ bool is_ordered(Card cards[], int card_quantity)
 {
     for (int i = 0; i < card_quantity; i++)
     {
-        for (int j = i; j < card_quantity; j++)
+        for (int j = i + 1; j < card_quantity; j++)
         {
-            if (cards[i].x > cards[j].x)
+            if (cards[i].value < cards[j].value && cards[i].x > cards[j].x || cards[i].value > cards[j].value && cards[i].x < cards[j].x)
             {
                 return false;
             }
-            else 
-                return true;
         }
     }
 
-    //return true;
+    return true;
 }

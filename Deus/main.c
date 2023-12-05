@@ -29,52 +29,46 @@ void draw_scenario()
 void draw_player_info(Player player)
 {
     al_draw_textf(al_create_builtin_font(), al_map_rgb(255, 255, 255),
-        SCREEN_W / 2, 10, ALLEGRO_ALIGN_CENTER,
-        "Lives: %d", player.lives);
+                  SCREEN_W / 2, 10, ALLEGRO_ALIGN_CENTER,
+                  "Lives: %d", player.lives);
 }
 
 Card possible_cards[10];
-
-void add_card(Card cards[], int index, ALLEGRO_BITMAP* card_bitmap)
-{
-    Card previousCard = cards[index - 1];
-    Card card;
-    initCard(&card, previousCard.x + 50, SCREEN_H - 174, previousCard.value + 1, card_bitmap);
-    cards[index] = card;
-}
 
 void start_screen()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    ALLEGRO_BITMAP* imagem = al_load_bitmap("background_start.jpg");
+    ALLEGRO_BITMAP *imagem = al_load_bitmap("../Deus/background_start.jpg");
 
-    if (!imagem) {
+    if (!imagem)
+    {
         fprintf(stderr, "Falha ao carregar a imagem!\n");
     }
-    else {
+    else
+    {
         int largura_imagem = al_get_bitmap_width(imagem);
         int altura_imagem = al_get_bitmap_height(imagem);
         al_draw_bitmap(imagem, (SCREEN_W - largura_imagem) / 2, (SCREEN_H - altura_imagem) / 2, 0);
         al_destroy_bitmap(imagem);
     }
 
-    ALLEGRO_FONT* font = al_create_builtin_font();
+    ALLEGRO_FONT *font = al_create_builtin_font();
     al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 - 30,
-        ALLEGRO_ALIGN_CENTER, "Pressione ENTER para iniciar o jogo");
+                 ALLEGRO_ALIGN_CENTER, "Pressione ENTER para iniciar o jogo");
     al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W / 2, SCREEN_H / 2 + 30,
-        ALLEGRO_ALIGN_CENTER, "Use o mouse para arrastar as cartas e ordená-las");
+                 ALLEGRO_ALIGN_CENTER, "Use o mouse para arrastar as cartas e ordená-las");
 
     al_flip_display();
 }
 
 int main()
 {
-    ALLEGRO_DISPLAY* display = NULL;
-    ALLEGRO_EVENT_QUEUE* event_queue = NULL;
-    ALLEGRO_TIMER* timer = NULL;
-    ALLEGRO_BITMAP* img;
-    ALLEGRO_BITMAP* card_bitmap[10];
+    ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+    ALLEGRO_TIMER *timer = NULL;
+    ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *card_bitmap[10];
 
     if (!al_init())
     {
@@ -135,44 +129,47 @@ int main()
 
     srand(time(NULL));
 
-    card_bitmap[0] = al_load_bitmap("agua_viva.jpg");
-    card_bitmap[1] = al_load_bitmap("dinossauro.jpg");
-    card_bitmap[2] = al_load_bitmap("vidro.jpg");
-    card_bitmap[3] = al_load_bitmap("piramides.jpg");
-    card_bitmap[4] = al_load_bitmap("mamutes.jpg");
-    card_bitmap[5] = al_load_bitmap("pitagoras.jpg");
-    card_bitmap[6] = al_load_bitmap("socrates.jpg");
-    card_bitmap[7] = al_load_bitmap("muralha_china.jpg");
-    card_bitmap[8] = al_load_bitmap("cleopatra.jpg");
-    card_bitmap[9] = al_load_bitmap("imp_romano.jpg");
-
-    bool card_used[10] = { false };
-
-    for (int i = 0; i < 10; i++) {
-        int random_index;
-        do {
-            random_index = rand() % 10;
-        } while (card_used[random_index]);
-
-        card_used[random_index] = true;
-
-        ALLEGRO_BITMAP* temp = card_bitmap[i];
-        card_bitmap[i] = card_bitmap[random_index];
-        card_bitmap[random_index] = temp;
-    }
-
-    Player player = { .lives = 3, .card_quantity = 2 };
     Card cards[10];
+
+    card_bitmap[0] = al_load_bitmap("../Deus/agua_viva.jpg");
+    card_bitmap[1] = al_load_bitmap("../Deus/dinossauro.jpg");
+    card_bitmap[2] = al_load_bitmap("../Deus/vidro.jpg");
+    card_bitmap[3] = al_load_bitmap("../Deus/piramides.jpg");
+    card_bitmap[4] = al_load_bitmap("../Deus/mamutes.jpg");
+    card_bitmap[5] = al_load_bitmap("../Deus/pitagoras.jpg");
+    card_bitmap[6] = al_load_bitmap("../Deus/socrates.jpg");
+    card_bitmap[7] = al_load_bitmap("../Deus/muralha_china.jpg");
+    card_bitmap[8] = al_load_bitmap("../Deus/cleopatra.jpg");
+    card_bitmap[9] = al_load_bitmap("../Deus/imp_romano.jpg");
     Shadow shadows[10];
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 10; i++)
     {
-        initCard(&cards[i], 250 + i * 100, SCREEN_H - 174, i, card_bitmap[i]);
+        Card card;
+        card.imagem = card_bitmap[i];
+        card.value = i;
+        cards[i].selected = false;
+        cards[i] = card;
+        cards[i].y = SCREEN_H - 174;
         initShadow(&shadows[i], 30 + (i * 125), 200);
     }
 
+    bool card_used[10] = {false};
+
+    Player player = {.lives = 3, .card_quantity = 2, .is_card_being_dragged = false};
+
+    size_t i;
+    for (i = 0; i < 10 - 1; i++)
+    {
+        size_t j = i + rand() / (RAND_MAX / (10 - i) + 1);
+        Card t = cards[j];
+        cards[j] = cards[i];
+        cards[i] = t;
+        cards[i].x = 150 + i * 50;
+    }
+
     int fase = 0;
-    img = al_load_bitmap("background_test.jpg");
+    img = al_load_bitmap("../Deus/background_test.jpg");
 
     int playing = 1;
     int checkPositions = 0;
@@ -182,6 +179,7 @@ int main()
     start_screen();
 
     bool game_started = false;
+    bool win = false;
     while (!game_started)
     {
         ALLEGRO_EVENT ev;
@@ -214,14 +212,6 @@ int main()
                 draw_shadow(shadows[i]);
             }
 
-            if (checkPositions)
-            {
-                // Desenhe retângulos de contorno nas posições desejadas
-                // Exemplo: al_draw_rectangle(CARD_1_AREA_X_START, SCREEN_H / 2 - CARD_H / 2,
-                //                             CARD_1_AREA_X_END, SCREEN_H / 2 + CARD_H / 2,
-                //                             al_map_rgb(255, 0, 0), 2);
-            }
-
             for (int i = 0; i < player.card_quantity; ++i)
             {
                 draw_card(cards[i]);
@@ -230,6 +220,11 @@ int main()
             if (player.lives == 0)
             {
                 al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba(255, 0, 0, 100));
+            }
+
+            if (win)
+            {
+                al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba(0, 255, 0, 100));
             }
 
             al_flip_display();
@@ -262,10 +257,6 @@ int main()
         }
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
         {
-            if (player.lives == 0)
-            {
-                break;
-            }
             if (ev.keyboard.keycode == ALLEGRO_KEY_ENTER)
             {
                 positionsChecked = 1;
@@ -277,12 +268,14 @@ int main()
                 }
                 else
                 {
-                    // player.lives++; // Aumentar vidas se a ordem estiver correta
+                    if (player.card_quantity == 10)
+                    {
+                        win = true;
+                    }
                 }
                 if (player.card_quantity < 10)
                 {
                     player.card_quantity++;
-                    add_card(cards, player.card_quantity - 1, card_bitmap[player.card_quantity - 1]);
                 }
             }
         }
@@ -306,7 +299,7 @@ int main()
     al_destroy_bitmap(img);
     al_destroy_timer(timer);
 
-    ALLEGRO_FONT* font = al_create_builtin_font();
+    ALLEGRO_FONT *font = al_create_builtin_font();
     al_destroy_font(font);
 
     for (int i = 0; i < 10; i++)

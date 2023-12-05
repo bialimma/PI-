@@ -28,7 +28,7 @@ void draw_player_info(Player player)
 
 typedef struct Start 
 
-// Função para a tela de inicialização
+// Funï¿½ï¿½o para a tela de inicializaï¿½ï¿½o
 bool telaInicial(ALLEGRO_DISPLAY* display, ALLEGRO_EVENT_QUEUE* event_queue);
 
 
